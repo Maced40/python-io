@@ -1,18 +1,19 @@
-try: #estamos indicando: tenta isso daqui python
-    arquivo_contato = open('dados/contatos.csv', encoding='latin_1', mode='w+') #podemos definir o encoding adicionando oa parâmetro encoding=''
-    #ao definirmos w+ ou a+, caso o arquivo não exista, ele criará um novo
+import contatos_utils
 
-    # readline() - melhor para a questão de memória
-    #read lines()
+try: 
+    # contatos = contatos_utils.csv_para_contatos('dados/contatos.csv')
+    # contatos_utils.contatos_para_pickle(contatos, 'dados/contatos.pickle') #p ou pickle para indicar que eh um arquivo binario de disco
 
-    for linha in arquivo_contato:
-        print(linha, end='') #tiramos a quebra de linha
+    # contatos = contatos_utils.pickle_para_contatos('dados/contatos.pickle')
+    # contatos_utils.contatos_para_json(contatos, 'dados/contatos.json')
 
-except FileNotFoundError: #uma excessão, ou seja, caso o path não exista, exibir esta mensagem
-    print('Arquivo não encontrado.')
+    contatos = contatos_utils.json_para_contatos('dados/contatos.json')
+
+    for contato in contatos:
+        print(f'{contato.id} - {contato.nome} - {contato.email}')
+
+except FileNotFoundError:
+    print('Arquivo nao encontrado.')
 
 except PermissionError:
-    print('Sem permissão de escrita.')
-
-finally: #estamos falando: independentemente do que você tentar, finaliza com isso
-    arquivo_contato.close()
+    print('Sem permissao de escrita.')
